@@ -2,33 +2,39 @@ const hltb = require('howlongtobeat');
 const jsonCache = require("./jsonCache");
 const hltbService = new hltb.HowLongToBeatService();
 
-const debugLimit = 1;
 const sleepMax = 5;
+let debugLimit = 10;
 
 async function main() {
-    await jsonCache.createCache(true);
+    await jsonCache.createCache(false);
 
     let cache = jsonCache.getCache();
 
-    for (let i =0; i < cache.games.length; i++) {
-        let game = cache.games[i];
-        if (game.main && game)
-        console.log(game);
-        let hltbData = await debouncedRequest(game.name, sleepMax);
-        console.log(hltbData);
-        game["main"] = hltbData[0].gameplayMain
-        game["main&extra"] = hltbData[0].gameplayMainExtra
-        game["completionist"] = hltbData[0].gameplayCompletionist
-        game["hltbSimilarity"] = hltbData[0].similarity
-        game["hltbName"] = hltbData[0].name
-        console.log(cache.games[i])
+    let iterations = 0
 
+    for (let i = 0; i < cache.games.length; i++) {
+        let game = cache.games[i];
+
+        // cache hit
+        if (game["main"] !== undefined && game["mainExtra"] !== undefined && game["completionist"] !== undefined) {
+            console.log("Cache hit - skipping to the next game")
+            continue;
+        }
+        let hltbData = await debouncedRequest(game.name, sleepMax);
+
+        game["main"] = hltbData[0].gameplayMain
+        game["mainExtra"] = hltbData[0].gameplayMainExtra;
+        game["completionist"] = hltbData[0].gameplayCompletionist;
+        game["hltbSimilarity"] = hltbData[0].similarity;
+        game["hltbName"] = hltbData[0].name;
+
+        iterations++;
         // limit how many times the function is run for debugging purposes
-        if (i === (debugLimit - 1)){
+        if (iterations >= (debugLimit - 1)){
             break;
         }
     }
-    // jsonCache.saveCache(cache)
+    jsonCache.saveCache(cache)
 }
 
 // debouncing calls to the service so that I don't get IP blocked for DDoSing lol
