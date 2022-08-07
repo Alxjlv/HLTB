@@ -1,6 +1,7 @@
 html/*
 output_list.csv
 games.csv
+gamesCache.json
 # Created by https://www.toptal.com/developers/gitignore/api/python,node,pycharm+all,webstorm+all
 # Edit at https://www.toptal.com/developers/gitignore?templates=python,node,pycharm+all,webstorm+all
 
