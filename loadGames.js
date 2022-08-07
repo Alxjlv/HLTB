@@ -3,15 +3,12 @@ const jsonCache = require("./jsonCache");
 const hltbService = new hltb.HowLongToBeatService();
 
 const sleepMax = 5;
-let debugLimit = 10;
 
 async function main() {
     await jsonCache.createCache(false);
 
     let cache = jsonCache.getCache();
-
-    let iterations = 0
-
+    
     for (let i = 0; i < cache.games.length; i++) {
         let game = cache.games[i];
 
@@ -27,12 +24,6 @@ async function main() {
         game["completionist"] = hltbData[0].gameplayCompletionist;
         game["hltbSimilarity"] = hltbData[0].similarity;
         game["hltbName"] = hltbData[0].name;
-
-        iterations++;
-        // limit how many times the function is run for debugging purposes
-        if (iterations >= (debugLimit - 1)){
-            break;
-        }
     }
     jsonCache.saveCache(cache)
 }
