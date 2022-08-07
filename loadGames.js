@@ -8,7 +8,7 @@ async function main() {
     await jsonCache.createCache(false);
 
     let cache = jsonCache.getCache();
-    
+
     for (let i = 0; i < cache.games.length; i++) {
         let game = cache.games[i];
 
@@ -18,6 +18,12 @@ async function main() {
             continue;
         }
         let hltbData = await debouncedRequest(game.name, sleepMax);
+
+        if (hltbData.length === 0) {
+            game["main"] = "SEARCH FAILED"
+            game["mainExtra"] = "SEARCH FAILED"
+            game["completionist"] = "SEARCH FAILED"
+        }
 
         game["main"] = hltbData[0].gameplayMain
         game["mainExtra"] = hltbData[0].gameplayMainExtra;
