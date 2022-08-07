@@ -3,6 +3,7 @@ const { parse } = require("csv-parse");
 
 function createCache(override) {
     try {
+        // found from https://stackabuse.com/reading-and-writing-json-files-with-node-js/
         let currentCacheRaw = fs.readFileSync('gamesCache.json').toString()
         let currentCache = JSON.parse(currentCacheRaw)
 
@@ -24,6 +25,7 @@ function createCache(override) {
     }
     console.log("Creating cache")
     // load in list of games
+    // found from https://www.digitalocean.com/community/tutorials/how-to-read-and-write-csv-files-in-node-js-using-node-csv
     fs.createReadStream("games.csv")
         .pipe(parse({ delimiter: "\t", from_line: 2}))
         .on("data", function (row) {
