@@ -1,7 +1,7 @@
 const fs = require("fs");
 const { parse } = require("csv-parse");
 
-const cacheFile = "gamesCache.json"
+const cacheFile = "gamesCache.json";
 
 function createCache(override) {
     try {
@@ -38,7 +38,7 @@ function createCache(override) {
 
                 // save json file to disk
                 saveCache(json);
-                resolve()
+                resolve();
             }).on('error', reject)
     })
 }
@@ -73,7 +73,7 @@ function getCache() {
 function saveCache(updatedCache) {
     let jsonString = JSON.stringify(updatedCache, null, 2);
     fs.writeFileSync(cacheFile, jsonString);
-    console.log("Cache saved to disk")
+    console.log("Cache saved to disk");
 }
 
 class CacheError extends Error {

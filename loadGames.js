@@ -14,15 +14,15 @@ async function main() {
 
         // cache hit
         if (game["main"] !== undefined && game["mainExtra"] !== undefined && game["completionist"] !== undefined) {
-            console.log("Cache hit - skipping to the next game")
+            console.log("Cache hit - skipping to the next game");
             continue;
         }
         let hltbData = await debouncedRequest(game.name, sleepMax);
 
         if (hltbData.length === 0) {
-            game["main"] = "SEARCH FAILED"
-            game["mainExtra"] = "SEARCH FAILED"
-            game["completionist"] = "SEARCH FAILED"
+            game["main"] = "SEARCH FAILED";
+            game["mainExtra"] = "SEARCH FAILED";
+            game["completionist"] = "SEARCH FAILED";
         }
 
         game["main"] = hltbData[0].gameplayMain
@@ -31,7 +31,7 @@ async function main() {
         game["hltbSimilarity"] = hltbData[0].similarity;
         game["hltbName"] = hltbData[0].name;
     }
-    jsonCache.saveCache(cache)
+    jsonCache.saveCache(cache);
 }
 
 // debouncing calls to the service so that I don't get IP blocked for DDoSing lol
@@ -47,6 +47,4 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-main()
-
-
+main();
