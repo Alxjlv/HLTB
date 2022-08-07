@@ -23,13 +23,15 @@ async function main() {
             game["main"] = "SEARCH FAILED";
             game["mainExtra"] = "SEARCH FAILED";
             game["completionist"] = "SEARCH FAILED";
+        } else {
+            game["main"] = hltbData[0].gameplayMain
+            game["mainExtra"] = hltbData[0].gameplayMainExtra;
+            game["completionist"] = hltbData[0].gameplayCompletionist;
+            game["hltbSimilarity"] = hltbData[0].similarity;
+            game["hltbName"] = hltbData[0].name;
         }
 
-        game["main"] = hltbData[0].gameplayMain
-        game["mainExtra"] = hltbData[0].gameplayMainExtra;
-        game["completionist"] = hltbData[0].gameplayCompletionist;
-        game["hltbSimilarity"] = hltbData[0].similarity;
-        game["hltbName"] = hltbData[0].name;
+
     }
     jsonCache.saveCache(cache);
 }
