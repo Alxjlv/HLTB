@@ -15,7 +15,11 @@ Now `ctrl + shift` from the very top-left cell to the bottom-right cell,
 and `ctrl + v` that data into a file at the same level as the `loadGames.js` script called `games.csv`. 
 This is the file that will be loaded into the node script. Double-check that each row item is separated by tabs.
 
-Run `npm i` to install the dependencies. Then, you can run `node loadGames.js`
+Run `npm i` to install the dependencies. Then, you can run `node loadGames.js`. This will create a csv file called 
+`processedOutput.csv` and will be tab separated.
+
+Note: filling out completion times will take a while. This is by design, I've added jitter to the requests to the HLTB 
+service so that it doesn't potentially run into IP blocking.
 
 ## Python HTML parser
 
