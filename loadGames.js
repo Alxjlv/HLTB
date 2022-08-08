@@ -9,14 +9,18 @@ async function main() {
 
     let cache = jsonCache.getCache();
 
+    let cacheHit = 0;
     for (let i = 0; i < cache.games.length; i++) {
         let game = cache.games[i];
 
         // cache hit
         if (game["main"] !== undefined && game["mainExtra"] !== undefined && game["completionist"] !== undefined) {
-            console.log("Cache hit - skipping to the next game");
+            cacheHit ++;
             continue;
         }
+        console.log("Cache was hit " + cacheHit + " times & skipped gathering data for those games")
+        cacheHit = 0;
+
         // on cache miss, do the request
         let hltbData = await jitteredRequest(game.name, sleepMax);
 
@@ -31,7 +35,10 @@ async function main() {
             game["hltbSimilarity"] = hltbData[0].similarity;
             game["hltbName"] = hltbData[0].name;
         }
-
+    }
+    // if there are any leftover cache hits
+    if (cacheHit > 0) {
+        console.log("Cache was hit " + cacheHit + " times & skipped gathering data for that many games")
     }
     jsonCache.saveCache(cache);
     jsonCache.writeToCSV("processedOutput.csv");
