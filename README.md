@@ -19,7 +19,8 @@ Run `npm i` to install the dependencies. Then, you can run `node loadGames.js`. 
 `processedOutput.csv` and will be tab separated.
 
 Note: filling out completion times will take a while. This is by design, I've added jitter to the requests to the HLTB 
-service so that it doesn't potentially run into IP blocking.
+service so that it doesn't potentially run into IP blocking. This is between 0-5 seconds currently.
+If you want to remove this jitter, set `sleepMax` to `0` at the top of `loadGames.js`.
 
 ## Python HTML parser
 

@@ -47,7 +47,7 @@ async function main() {
 // adding jitter to the service so that I don't get IP blocked for DDoSing lol
 async function jitteredRequest(searchQuery, maxSleepSeconds) {
     let randomSleep = Math.floor(Math.random() * (maxSleepSeconds + 1)) * 1000;
-    console.log("Sleeping for " + randomSleep + " milliseconds");
+    console.log("Sleeping for " + randomSleep / 1000 + " seconds");
     await sleep(randomSleep);
     console.log("Searching for " + searchQuery);
     return await hltbService.search(searchQuery);
