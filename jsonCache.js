@@ -76,6 +76,20 @@ function saveCache(updatedCache) {
     console.log("Cache saved to disk");
 }
 
+function writeToCSV(outputFile) {
+    console.log("Saving cache to CSV file")
+    let cache = getCache();
+    let csvString = "Game Name\tCurrent Hours\tMain\tMain & Extras\tCompletionist\tPlatform\n"
+    for(let i = 0; i < cache.games.length; i++) {
+        let game = cache.games[i]
+        let gameString = game.name + "\t" + game.currentHours + "\t" + game.main
+            + "\t" + game.mainExtra + "\t" + game.completionist + "\t" + game.platform + "\n";
+        csvString += gameString;
+    }
+    fs.writeFileSync(outputFile, csvString);
+    console.log("CSV file saved as " + outputFile)
+}
+
 class CacheError extends Error {
     constructor(message) {
         super(message);
@@ -87,5 +101,6 @@ class CacheError extends Error {
 module.exports = {
     createCache,
     getCache,
-    saveCache
+    saveCache,
+    writeToCSV
 }

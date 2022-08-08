@@ -1,5 +1,6 @@
 const hltb = require('howlongtobeat');
 const jsonCache = require("./jsonCache");
+const {writeToCSV} = require("./jsonCache");
 const hltbService = new hltb.HowLongToBeatService();
 
 const sleepMax = 5;
@@ -34,6 +35,7 @@ async function main() {
 
     }
     jsonCache.saveCache(cache);
+    jsonCache.writeToCSV("processedOutput.csv");
 }
 
 // debouncing calls to the service so that I don't get IP blocked for DDoSing lol
